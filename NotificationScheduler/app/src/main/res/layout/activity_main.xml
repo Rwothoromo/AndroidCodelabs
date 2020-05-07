@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/network_type_required"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_margin="@dimen/general_margin"/>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/networkOptions"
+        android:layout_margin="@dimen/general_margin">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/none"
+            android:id="@+id/noNetwork"
+            android:checked="true"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/any"
+            android:id="@+id/anyNetwork"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wifi"
+            android:id="@+id/wifiNetwork"/>
+
+    </RadioGroup>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scheduleBtn"
+        android:text="@string/schedule_job"
+        android:onClick="scheduleJob"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/general_margin"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cancelBtn"
+        android:text="@string/cancel_jobs"
+        android:onClick="cancelJobs"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/general_margin"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/requires"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:layout_margin="@dimen/general_margin"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/general_margin">
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/device_idle"
+            android:id="@+id/idleSwitch"/>
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/device_charging"
+            android:id="@+id/chargingSwitch"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/general_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/override_deadline"
+            android:id="@+id/seekBarLabel"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_margin="@dimen/general_margin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/not_set"
+            android:id="@+id/seekBarProgress"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_margin="@dimen/general_margin"/>
+
+    </LinearLayout>
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/seekBar"
+        android:layout_margin="@dimen/general_margin"/>
+
+</LinearLayout>
