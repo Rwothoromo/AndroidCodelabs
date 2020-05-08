@@ -17,9 +17,6 @@ import timber.log.Timber
  *
  * Worker is where you put the code for the actual work you want to perform in the background.
  * We extend Worker and override the doWork() method.
- *
- * @param ctx Context needed to ...
- * @param params WorkerParameters ...
  */
 class BlurWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, params) {
 
@@ -31,6 +28,9 @@ class BlurWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, params) {
         val resourceUri = inputData.getString(KEY_IMAGE_URI)
 
         makeStatusNotification("Blurring image", appContext)
+
+        // slow down the worker
+        sleep()
 
         return try {
 
