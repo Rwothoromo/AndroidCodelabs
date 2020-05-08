@@ -60,6 +60,9 @@ class BlurActivity : AppCompatActivity() {
                 }
             }
         }
+
+        // Hookup the Cancel button
+        binding.cancelButton.setOnClickListener { viewModel.cancelWork() }
     }
 
     /**

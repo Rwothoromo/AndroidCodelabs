@@ -39,6 +39,13 @@ class BlurViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     /**
+     * You can cancel work using the id, tag or unique chain name
+     */
+    internal fun cancelWork() {
+        workManager.cancelUniqueWork(IMAGE_MANIPULATION_WORK_NAME)
+    }
+
+    /**
      * Creates the input data bundle which includes the Uri to operate on
      * Data objects are lightweight containers for key/value pairs.
      * They are meant to store a small amount of data that might pass into and out from WorkRequests.
