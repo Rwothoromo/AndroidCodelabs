@@ -15,6 +15,7 @@
  */
 package com.example.hellosharedprefs
 
+import android.content.SharedPreferences
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
@@ -50,6 +51,14 @@ class MainActivity : AppCompatActivity() {
     // Key for current color
     private val COLOR_KEY = "color"
 
+    // Reference to a SharedPreferences object
+    // conventionally, it has the same name as the package name of your app
+    // but you can rename it to anything you want to
+    private var mPreferences: SharedPreferences? = null
+
+    // File for storing shared preferences
+    private val sharedPrefFile = "com.example.hellosharedprefs"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -58,15 +67,42 @@ class MainActivity : AppCompatActivity() {
         mShowCountTextView = findViewById(R.id.count_textview)
         mColor = ContextCompat.getColor(this, R.color.default_background)
 
-        // Restore the saved instance state.
-        if (savedInstanceState != null) {
-            mCount = savedInstanceState.getInt(COUNT_KEY)
-            if (mCount != 0) {
-                mShowCountTextView!!.text = String.format("%s", mCount)
-            }
-            mColor = savedInstanceState.getInt(COLOR_KEY)
-            mShowCountTextView!!.setBackgroundColor(mColor)
-        }
+        // Initialize the shared preferences
+        // The getSharedPreferences() method (from the activity Context)
+        // opens the file at the given filename (sharedPrefFile) with the mode MODE_PRIVATE.
+        mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE)
+
+        // Restore preferences
+        mCount = mPreferences!!.getInt(COUNT_KEY, 0)
+        mColor = mPreferences!!.getInt(COLOR_KEY, mColor);
+
+        // Update values with the pref values
+        mShowCountTextView!!.text = String.format("%s", mCount)
+        mShowCountTextView!!.setBackgroundColor(mColor)
+    }
+
+    /**
+     * Saving preferences is a lot like saving the instance state;
+     * both operations set aside the data to a Bundle object as a key/value pair.
+     *
+     * For shared preferences, however, you save that data in the onPause() lifecycle callback,
+     * and you need a shared editor object (SharedPreferences.Editor) to write to the shared preferences object.
+     */
+    override fun onPause() {
+        super.onPause()
+
+        val preferencesEditor = mPreferences!!.edit()
+
+        // write the changes
+        preferencesEditor.putInt(COUNT_KEY, mCount)
+        preferencesEditor.putInt(COLOR_KEY, mColor)
+
+        // The apply() method saves the preferences asynchronously, off of the UI thread.
+        // The shared preferences editor also has a commit() method to synchronously save the preferences.
+        // NOTE: The commit() method is discouraged as it can block other operations!
+
+        // save the changes
+        preferencesEditor.apply()
     }
 
     /**
@@ -121,5 +157,14 @@ class MainActivity : AppCompatActivity() {
         // Reset color
         mColor = ContextCompat.getColor(this, R.color.default_background)
         mShowCountTextView!!.setBackgroundColor(mColor)
+
+        // Get an editor for the SharedPreferences object
+        val preferencesEditor = mPreferences!!.edit()
+
+        // Delete all the shared preferences
+        preferencesEditor.clear()
+
+        // Save
+        preferencesEditor.apply()
     }
 }
