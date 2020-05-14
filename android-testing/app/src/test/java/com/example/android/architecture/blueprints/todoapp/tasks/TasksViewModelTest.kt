@@ -6,8 +6,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.android.architecture.blueprints.todoapp.Event
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.not
-import org.hamcrest.Matchers.nullValue
+import org.hamcrest.Matchers.*
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,6 +21,10 @@ import org.junit.runner.RunWith
  */
 @RunWith(AndroidJUnit4::class)
 class TasksViewModelTest {
+
+    // Subject under test
+    private lateinit var tasksViewModel: TasksViewModel
+
     // InstantTaskExecutorRule is a JUnit Rule.
     // When you use it with the @get:Rule annotation,
     // it causes some code in the InstantTaskExecutorRule class to be run before and after the tests.
@@ -32,12 +36,14 @@ class TasksViewModelTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
+    @Before
+    fun setupViewModel() {
+        // Given a fresh TasksViewModel
+        tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
+    }
+
     @Test
     fun addNewTask_setsNewTaskEvent() {
-
-        // Given a fresh TasksViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
-
 //        // Create observer - no need for it to do anything!
 //        val observer = Observer<Event<Unit>> {}
 //        try {
@@ -67,4 +73,12 @@ class TasksViewModelTest {
         assertThat(value.getContentIfNotHandled(), not(nullValue()))
     }
 
+    @Test
+    fun setFilterAllTasks_tasksAddViewVisible() {
+        // When the filter type is ALL_TASKS
+        tasksViewModel.setFiltering(TasksFilterType.ALL_TASKS)
+
+        // Then the "Add task" action is visible
+        assertThat(tasksViewModel.tasksAddViewVisible.getOrAwaitValue(), `is` (true))
+    }
 }
