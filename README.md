@@ -6,4 +6,5 @@ A number of Android Code Labs practiced to demonstrate/pick up on/reference some
 - [Room](RoomWordSample).
 - [JobScheduler](NotificationScheduler).
 - [WorkManager](android-workmanager).
-- [Unit test](SimpleCalc/com/example/simplecalc/CalculatorTest.kt)
+- [Unit test](SimpleCalc/com/example/simplecalc/CalculatorTest.kt).
+- [Testing](android-testing).
